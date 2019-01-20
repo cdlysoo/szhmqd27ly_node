@@ -3,6 +3,7 @@
  */
 const path = require('path')
 const MongoClient = require('mongodb').MongoClient;
+const captchapng = require('captchapng')
 
 const url = 'mongodb://localhost:27017';
 
@@ -54,5 +55,29 @@ MongoClient.connect(url,{ useNewUrlParser:true }, function(err, client) {
         }
     })
   });
+}
+
+exports.getLoginPage = (req,res) => {
+    res.sendFile(path.join(__dirname,"../public/views/login.html"))
+};
+
+exports.getVcodeImage = (req, res) => {
+    const vcode = parseInt(Math.random()*9000+1000);
+
+    req.session.vcode = vcode
+    var p = new captchapng(80,30,vcode);
+    p.color(0,0,0,0);
+    p.color(80,80,80,255);
+
+    var img = p.getBase64();
+
+    var imgbase64 = new Buffer(img, "base64");
+    res.writeHead(200,{
+        "Content-Type":"image/png"
+    })
+    res.end(imgbase64)
+};
+exports.login = (req,res) => {
+    
 }
 

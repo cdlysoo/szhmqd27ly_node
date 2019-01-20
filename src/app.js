@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 
 var bodyParser = require('body-parser')
+var session = require('express-session')
 
 //创建app
 const app = express()
@@ -12,6 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
  
 // parse application/json
 app.use(bodyParser.json())
+
+
+// Use the session middleware
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 600000 }}))
+
 
 app.use(express.static(path.join(__dirname,"public")))
 
