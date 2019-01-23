@@ -1,5 +1,5 @@
 /**
- * 登录和注册
+ * 注册和登录的处理
  */
 const express = require('express')
 const path = require('path')
@@ -18,9 +18,10 @@ accountRouter.post('/register',accountController.register)
 accountRouter.get('/login',accountController.getLoginPage)
 // 获取验证码
 accountRouter.get('/vcode',accountController.getVcodeImage)
-
-//登录操作
+// 登录操作
 accountRouter.post('/login',accountController.login)
+// 注销操作
+accountRouter.get('/logout',accountController.logout)
 
 // 导出路由对象
 module.exports = accountRouter
